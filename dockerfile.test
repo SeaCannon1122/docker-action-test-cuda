@@ -1,6 +1,0 @@
-FROM ultralytics/ultralytics:latest-jetson-jetpack6
-
-SHELL ["/bin/bash", "-c"]
-
-RUN apt update
-RUN apt upgrade -y

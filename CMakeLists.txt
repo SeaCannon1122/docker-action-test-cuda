@@ -24,7 +24,6 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(GST REQUIRED gstreamer-1.0)
 pkg_check_modules(GST_APP REQUIRED gstreamer-app-1.0)
 find_package(OpenCV REQUIRED)
-find_package(realsense2 REQUIRED)
 find_package(CUDA REQUIRED)
 find_package(CUDAToolkit REQUIRED)
 
@@ -81,7 +80,6 @@ set_target_properties(cuda_preprocessing PROPERTIES
 
 include_directories(
   ${GST_INCLUDE_DIRS}
-  ${realsense2_INCLUDE_DIR}
   ${CUDA_INCLUDE_DIRS}
   ${OPENCV_INCLUDE_DIRS}
   ${TENSORRT_INCLUDE_DIR}
@@ -96,7 +94,6 @@ add_executable(app
 target_link_libraries(app
   ${GST_LIBRARIES}
   ${GST_APP_LIBRARIES}
-  ${realsense2_LIBRARY}
   ${CUDA_LIBRARIES}
   ${OpenCV_LIBS}
   nvinfer

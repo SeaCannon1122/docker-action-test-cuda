@@ -2,7 +2,6 @@
 #include <atomic>
 #include <csignal>
 #include <unistd.h>
-#include <librealsense2/rs.hpp>
 #include <gst/gst.h>
 #include <gst/app/gstappsrc.h>
 #include <cstdlib>
@@ -20,19 +19,20 @@ int main(int argc, char** argv)
 {
     printf("test");
 
-    if (argc != 8)
+    if (argc != 9)
     {
-        printf("usage: ./camera_app <ip> <port> <width> <height> <fps> <engine_file> <labels_file>\n");
+        printf("usage: ./camera_app <video_src> <ip> <port> <width> <height> <fps> <engine_file> <labels_file>\n");
         return -1;
     }
 
-    std::string ip = std::string(argv[1]);
-    int port = atoi(argv[2]);
-    int width = atoi(argv[3]);
-    int height = atoi(argv[4]);
-    int fps = atoi(argv[5]);
-    std::string engine = std::string(argv[6]);
-    std::string labels = std::string(argv[7]);
+    std::string video_src = std::string(argv[1]);
+    std::string ip = std::string(argv[2]);
+    int port = atoi(argv[3]);
+    int width = atoi(argv[4]);
+    int height = atoi(argv[5]);
+    int fps = atoi(argv[6]);
+    std::string engine = std::string(argv[7]);
+    std::string labels = std::string(argv[8]);
 
 
   gst_init(NULL, NULL);
@@ -60,20 +60,27 @@ int main(int argc, char** argv)
   gst_appsrc = gst_bin_get_by_name(GST_BIN(gst_pipeline), "appsrc");
   gst_element_set_state(gst_pipeline, GST_STATE_PLAYING);
 
-  rs2::config rs_cfg; rs2::pipeline rs_pipeline;
+  cv::VideoCapture cap;
+    cap.open(video_src, cv::CAP_V4L2);
+    if (!cap.isOpened()) {
+        std::cerr << "Error: Could not open the camera!\n";
+        return -1;
+    }
 
-  rs_cfg.enable_stream(RS2_STREAM_COLOR, width, height, RS2_FORMAT_BGR8, fps);
-  rs_pipeline.start(rs_cfg);
+    cap.set(cv::CAP_PROP_FRAME_WIDTH, width);
+    cap.set(cv::CAP_PROP_FRAME_HEIGHT, height);
+    cap.set(cv::CAP_PROP_FPS, fps);
+
   printf("Streaming camera on %s:%d", ip.c_str(), port);
 
   signal(SIGTERM, handle_signal);
   signal(SIGINT, handle_signal);
 
-  while (keep_running.load())
+    cv::Mat image;
+
+  while (keep_running.load() && cap.read(image))
   {
-    rs2::frameset frames = rs_pipeline.wait_for_frames();
-    rs2::video_frame color_frame = frames.get_color_frame();
-    cv::Mat image(height, width, CV_8UC3, (void*)color_frame.get_data());
+    
 
     std::vector<yolos::det::Detection> hazmat_results, paintroller_results;
 
@@ -91,7 +98,7 @@ int main(int argc, char** argv)
     gst_app_src_push_buffer(GST_APP_SRC(gst_appsrc), buffer);
   }
  
-  rs_pipeline.stop();
+  cap.release();
   printf("Closed camera");
 
   gst_element_set_state(gst_pipeline, GST_STATE_NULL);
