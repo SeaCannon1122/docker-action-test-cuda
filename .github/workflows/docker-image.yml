@@ -40,6 +40,6 @@ jobs:
           file: dockerfile
           platforms: linux/arm64
           push: true
-          tags: ghcr.io/${{ env.OWNER_LC }}/quac-camera:latest
-          cache-from: type=registry,ref=ghcr.io/${{ env.OWNER_LC }}/quac-camera:latest
-          cache-to: type=registry,ref=ghcr.io/${{ env.OWNER_LC }}/quac-camera:cache,mode=max
+          tags: ghcr.io/${{ env.OWNER_LC }}/docker-test-cuda:latest
+          cache-from: type=registry,ref=ghcr.io/${{ env.OWNER_LC }}/docker-test-cuda:latest
+          cache-to: type=registry,ref=ghcr.io/${{ env.OWNER_LC }}/docker-test-cuda:cache,mode=max
