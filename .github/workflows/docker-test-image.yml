@@ -42,4 +42,4 @@ jobs:
           push: true
           tags: ghcr.io/${{ env.OWNER_LC }}/docker-test:latest
           cache-from: type=registry,ref=ghcr.io/${{ env.OWNER_LC }}/docker-test:latest
-          cache-to: type=registry,ref=ghcr.io/${{ env.OWNER_LC }}/docker-camera:test,mode=max
+          cache-to: type=registry,ref=ghcr.io/${{ env.OWNER_LC }}/docker-test:cache,mode=max
