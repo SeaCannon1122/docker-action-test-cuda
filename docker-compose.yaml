@@ -11,7 +11,7 @@ services:
   cuda_app_pulled:
     stop_signal: SIGINT
     network_mode: "host"
-    image: ghcr.io/SeaCannon1122/docker-test-cuda:latest
+    image: ghcr.io/seacannon1122/docker-test-cuda:latest
     runtime: nvidia
     ipc: host
     privileged: true
