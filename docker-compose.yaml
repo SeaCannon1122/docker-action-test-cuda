@@ -1,0 +1,9 @@
+services:
+  cuda_app:
+    stop_signal: SIGINT
+    network_mode: "host"
+    image: ghcr.io/wggrobotic/quac-camera:latest
+    runtime: nvidia
+    ipc: host
+    privileged: true
+    command: /bin/bash -c "./app 192.168.137.26 5000 1920 1080 30 labels.txt"

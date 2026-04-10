@@ -1,0 +1,6 @@
+FROM ubuntu:jammy
+
+SHELL ["/bin/bash", "-c"]
+
+RUN apt update
+RUN apt upgrade
