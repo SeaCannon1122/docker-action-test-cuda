@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ultralytics/ultralytics:latest-jetson-jetpack6
 
 SHELL ["/bin/bash", "-c"]
 
