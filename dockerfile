@@ -4,6 +4,7 @@ SHELL ["/bin/bash", "-c"]
 
 # install some libs
 
+RUN apt update
 RUN apt install -y unzip git
 RUN apt install -y \
     libgstreamer1.0-dev \
