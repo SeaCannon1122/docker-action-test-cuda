@@ -61,10 +61,10 @@ find_library(NVONNXPARSER_LIB nvonnxparser
 # CUDA Preprocessing Library
 
 add_library(cuda_preprocessing STATIC
-  YOLOs-CPP-TensorRT/include/yolos/core/cuda_preprocessing.cu
+  YOLOs-CPP-TensorRT_clone/include/yolos/core/cuda_preprocessing.cu
 )
 target_include_directories(cuda_preprocessing PRIVATE
-  YOLOs-CPP-TensorRT/include
+  YOLOs-CPP-TensorRT_clone/include
   ${TENSORRT_INCLUDE_DIR}
 )
 target_link_libraries(cuda_preprocessing PRIVATE
@@ -86,7 +86,7 @@ include_directories(
   ${OPENCV_INCLUDE_DIRS}
   ${TENSORRT_INCLUDE_DIR}
   include/
-  YOLOs-CPP-TensorRT/include
+  YOLOs-CPP-TensorRT_clone/include
 )
 
 add_executable(app
