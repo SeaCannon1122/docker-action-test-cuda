@@ -105,6 +105,6 @@ if(NVONNXPARSER_LIB)
   target_link_libraries(app ${NVONNXPARSER_LIB})
 endif()
 
-#target_link_options(app PRIVATE
-#  -Wl,--allow-shlib-undefined
-#)
+target_link_options(app PRIVATE
+  -Wl,--allow-shlib-undefined
+)

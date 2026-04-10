@@ -18,11 +18,13 @@ RUN apt install -y \
     build-essential \
     pkg-config
 
+RUN apt install -y cmake
+
 # quac
 
 WORKDIR /workspace
 
-COPY . /workspace
+COPY ./src /workspace
 
 WORKDIR /workspace/build
 

@@ -1,9 +1,18 @@
 services:
-  cuda_app:
+  cuda_app_local:
     stop_signal: SIGINT
     network_mode: "host"
-    image: ghcr.io/wggrobotic/quac-camera:latest
+    image: cuda_docker_test:latest
     runtime: nvidia
     ipc: host
     privileged: true
-    command: /bin/bash -c "./app 192.168.137.26 5000 1920 1080 30 labels.txt"
+    command: /bin/bash -c "./app /dev/video4 192.168.137.26 5000 1920 1080 30 ../hazmat_yolo26.engine ../labels.txt"
+
+  cuda_app_pulled:
+    stop_signal: SIGINT
+    network_mode: "host"
+    image: ghcr.io/SeaCannon1122/docker-test-cuda:latest
+    runtime: nvidia
+    ipc: host
+    privileged: true
+    command: /bin/bash -c "./app /dev/video4 192.168.137.26 5000 1920 1080 30 ../hazmat_yolo26.engine ../labels.txt"
