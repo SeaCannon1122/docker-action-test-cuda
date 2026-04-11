@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 
     if (argc != 9)
     {
-        printf("ERROR: usage: ./camera_app <video_src> <ip> <port> <width> <height> <fps> <engine_file> <labels_file>\n");
+        printf("usage: ./camera_app <video_src> <ip> <port> <width> <height> <fps> <engine_file> <labels_file>\n");
         return -1;
     }
 
